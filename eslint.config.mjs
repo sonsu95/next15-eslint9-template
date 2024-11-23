@@ -1,9 +1,9 @@
-import nextPlugin from '@next/eslint-plugin-next'
-import js from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import eslintConfigPrettier from 'eslint-config-prettier'
-import reactPlugin from 'eslint-plugin-react'
-import hooksPlugin from 'eslint-plugin-react-hooks'
+import nextPlugin from '@next/eslint-plugin-next';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import reactPlugin from 'eslint-plugin-react';
+import hooksPlugin from 'eslint-plugin-react-hooks';
 
 const config = [
   {
@@ -84,9 +84,8 @@ const config = [
     rules: {
       semi: ['error', 'always'],
       '@typescript-eslint/no-unused-vars': 1,
-      '@typescript-eslint/semi': ['error', 'always'],
     },
   },
-]
+];
 
-export default config
+export default config;

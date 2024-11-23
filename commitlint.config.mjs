@@ -22,4 +22,4 @@ export default {
     'footer-leading-blank': [1, 'always'],
     'footer-empty': [0, 'never'],
   },
-}
+};
