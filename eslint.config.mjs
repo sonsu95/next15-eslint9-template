@@ -82,7 +82,9 @@ const config = [
   {
     name: 'project-custom',
     rules: {
+      semi: ['error', 'always'],
       '@typescript-eslint/no-unused-vars': 1,
+      '@typescript-eslint/semi': ['error', 'always'],
     },
   },
 ]
