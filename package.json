@@ -7,8 +7,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write .",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix",
+    "prettier": "prettier \"**/*.{js,jsx,ts,tsx,css,json}\" --write",
+    "format": "pnpm run lint && pnpm run prettier",
     "inspect": "eslint --inspect-config",
     "prepare": "husky"
   },
