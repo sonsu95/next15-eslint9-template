@@ -4,39 +4,37 @@ import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
+import importPlugin from 'eslint-plugin-import';
+import a11yPlugin from 'eslint-plugin-jsx-a11y';
 
 const config = [
   {
     files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
+        tsconfigRootDir: '.',
+      },
+    },
   },
   {
     ignores: [
-      // Dependencies
       '**/node_modules/',
       '**/.pnpm-store/',
-
-      // Build outputs
       '**/.next/',
       '**/out/',
       '**/dist/',
       '**/build/',
-
-      // Package manager
       '**/pnpm-lock.yaml',
       '**/.pnpm-debug.log',
-
-      // Cache & Generated
       '**/.eslintcache',
       '**/next-env.d.ts',
-
-      // Config files
-      '*.config.{js,ts,mjs}', // process all config files at once
+      '*.config.{js,ts,mjs}',
       '**/tsconfig.json',
-
-      // Environment
       '**/.env*',
-
-      // IDE & System
       '**/.idea/',
       '**/.DS_Store',
     ],
@@ -47,16 +45,52 @@ const config = [
   },
   ...tseslint.configs.recommended,
   {
+    name: 'import/recommended',
+    plugins: {
+      import: importPlugin,
+    },
+    settings: {
+      'import/resolver': {
+        node: true,
+        typescript: true,
+      },
+    },
+    rules: {
+      ...importPlugin.configs.recommended.rules,
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal'],
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+          ],
+          'newlines-between': 'always',
+        },
+      ],
+    },
+  },
+  {
+    name: 'jsx-a11y/recommended',
+    plugins: {
+      'jsx-a11y': a11yPlugin,
+    },
+    rules: a11yPlugin.configs.recommended.rules,
+  },
+  {
     name: 'react/jsx-runtime',
     plugins: {
       react: reactPlugin,
     },
-    rules: reactPlugin.configs['jsx-runtime'].rules,
     settings: {
       react: {
         version: 'detect',
       },
     },
+    rules: reactPlugin.configs['jsx-runtime'].rules,
   },
   {
     name: 'react-hooks/recommended',
@@ -73,6 +107,21 @@ const config = [
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
+    },
+  },
+  {
+    name: 'typescript-strict',
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
+  },
+  {
+    name: 'promises',
+    rules: {
+      'no-async-promise-executor': 'error',
+      'no-await-in-loop': 'warn',
+      'prefer-promise-reject-errors': 'error',
     },
   },
   {
